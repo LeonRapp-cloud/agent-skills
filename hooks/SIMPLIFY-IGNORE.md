@@ -54,7 +54,7 @@ One script, three hook events:
 |---|---|
 | `PreToolUse Read` | Backs up file, replaces blocks with `BLOCK_<hash>` placeholders in-place |
 | `PostToolUse Edit\|Write` | Expands placeholders back to real code, saves model's changes, re-filters |
-| `Stop` | Expands the placeholders left in each file on disk, so changes made outside `Edit`/`Write` survive; falls back to the backup only if no placeholder is left |
+| `Stop` | Expands the placeholders left in each file on disk, so changes made outside `Edit`/`Write` survive; keeps a file that was put back whole (a `git checkout`/`stash` revert, an undo) instead of the stale backup; falls back to the backup only if no placeholder is left |
 
 Each block is content-hashed (8 hex chars via `shasum`/`sha1sum`) so the round-trip is unambiguous even if the model duplicates or reorders placeholders. Cache is project-scoped to prevent cross-session interference.
 
